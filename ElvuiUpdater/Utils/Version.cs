@@ -15,6 +15,14 @@ namespace ElvuiUpdater
             var newVerison = GetDownloadedVersion();
             return currentVerison == newVerison;
         }
+
+        public static bool CheckVersions(string? remoteVersion)
+        {
+            if (remoteVersion == null) return false;
+            var currentVerison = GetCurrentVersion();            
+            return currentVerison == remoteVersion;
+        }
+
         public static string GetCurrentVersion()
         {
             var wowPath = GetWowLocation();

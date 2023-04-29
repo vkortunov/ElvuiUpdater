@@ -21,18 +21,21 @@ namespace ElvuiUpdater
             try
             {
                 var content = Utils.GetContent("https://www.tukui.org/welcome.php");
-                var link = Utils.GetLink(content);
+                var version = Utils.GetRemoteVerion2(content);
+
+                if (Utils.CheckVersions(version))
+                {
+                    Console.WriteLine($"Already updated to latest version {version}");
+                    return;
+                }
+
+                var link = Utils.GetDownloadLink(content);
                 Console.WriteLine("Ready to update " + link.Replace("/downloads/", ""));
                 var url = "https://www.tukui.org" + link;
                 Console.WriteLine("Download from " + url);
                 Utils.Download(url);
                 Console.WriteLine("Extracting");
-                Utils.Extract();
-                if (Utils.CheckVersions())
-                {
-                    Console.WriteLine("Already updated to latest version");
-                    return;
-                }
+                Utils.Extract();                
                 Console.WriteLine("Get WoW location");
                 var wowPath = Utils.GetWowLocation();
                 Console.WriteLine(wowPath);
