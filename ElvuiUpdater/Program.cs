@@ -10,15 +10,19 @@ namespace ElvuiUpdater
         public static void Main(string[] args)
         {
             var version = "version-1.1.0";
-            GitSoftwareUpdater swUpdater = new GitSoftwareUpdater(version);
-            if(swUpdater.HasUpdate)
+            try
             {
-                var release = swUpdater.GetLastRelease();
-                Console.WriteLine($"Has new version ({release?.Name}):\n{release.Body}\n\nPerform update");
+                GitSoftwareUpdater swUpdater = new GitSoftwareUpdater(version);
+                if (swUpdater.HasUpdate)
+                {
+                    var release = swUpdater.GetLastRelease();
+                    Console.WriteLine($"Has new version ({release?.Name}):\n{release.Body}\n\nPerform update");
 
-                swUpdater.DoUpdate();
-                return;
+                    swUpdater.DoUpdate();
+                    return;
+                }
             }
+            catch { }
             
             UpdateElvui();
             Console.WriteLine("press any key...");
