@@ -98,7 +98,13 @@ namespace ElvuiUpdater.SoftwareUpdate
             if (File.Exists("update.bat"))
                 File.Delete("update.bat");
 
+            if (Directory.Exists("tmp"))
+                Directory.Delete("tmp", true);
+
             foreach (var file in Directory.GetFiles("./","*.bcp"))
+                File.Delete(file);
+
+            foreach (var file in Directory.GetFiles("./", "*.zip"))
                 File.Delete(file);
         }
 
