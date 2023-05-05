@@ -102,9 +102,10 @@ namespace ElvuiUpdater.SoftwareUpdate
                 File.Delete(file);
         }
 
-        void Restart()
+        void CopyAndRestart()
         {
-            var bat = $"timeout 5\nren ElvuiUpdater.exe ElvuiUpdater.exe.bcp \ncopy tmp\\ElvuiUpdater.exe ElvuiUpdater.exe \nElvuiUpdater.exe";
+            var name = Process.GetCurrentProcess().ProcessName;
+            var bat = $"timeout 1\nren /q ElvuiUpdater.exe ElvuiUpdater.exe.bcp \ncopy /Y tmp\\ElvuiUpdater.exe ElvuiUpdater.exe \nstart cmd.exe cmd /c \"ElvuiUpdater.exe\" ";
             using (var stream = File.CreateText("update.bat"))
             {
                 stream.WriteLine(bat);
@@ -142,7 +143,7 @@ namespace ElvuiUpdater.SoftwareUpdate
                         }
                     }
                 }
-                Restart();
+                CopyAndRestart();
             }
         }
     }

@@ -14,9 +14,10 @@ namespace ElvuiUpdater
             if(swUpdater.HasUpdate)
             {
                 var release = swUpdater.GetLastRelease();
-                Console.WriteLine($"Has new version ({release?.Name}):\n{release.Body}\n\nPerform update?");
+                Console.WriteLine($"Has new version ({release?.Name}):\n{release.Body}\n\nPerform update");
 
                 swUpdater.DoUpdate();
+                return;
             }
             
             UpdateElvui();
