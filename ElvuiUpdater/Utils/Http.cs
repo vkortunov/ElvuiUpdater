@@ -13,6 +13,7 @@ namespace ElvuiUpdater
         public static string GetContent(string url)
         {
             HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Add("User-Agent", "Chrome");
             var response = client.GetAsync(url).GetAwaiter().GetResult();
             var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             return content;

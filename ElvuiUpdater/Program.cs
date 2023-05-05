@@ -1,5 +1,6 @@
 ﻿
 
+using ElvuiUpdater.SoftwareUpdate;
 using System.Text.RegularExpressions;
 
 namespace ElvuiUpdater
@@ -8,7 +9,16 @@ namespace ElvuiUpdater
     {
         public static void Main(string[] args)
         {
+            var version = "version-1.1.0";
+            GitSoftwareUpdater swUpdater = new GitSoftwareUpdater(version);
+            if(swUpdater.HasUpdate)
+            {
+                var release = swUpdater.GetLastRelease();
+                Console.WriteLine($"Has new version ({release?.Name}):\n{release.Body}\n\nPerform update?");
 
+                swUpdater.DoUpdate();
+            }
+            
             UpdateElvui();
             Console.WriteLine("press any key...");
             Console.ReadKey();
