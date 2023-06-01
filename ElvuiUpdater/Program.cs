@@ -11,7 +11,7 @@ namespace ElvuiUpdater
     {
         public static void Main(string[] args)
         {
-            var version = "version-1.2.0";
+            var version = "version-1.3.0";
             try
             {
                 GitSoftwareUpdater swUpdater = new GitSoftwareUpdater(version);
@@ -40,21 +40,21 @@ namespace ElvuiUpdater
                 var content = Utils.GetContent("https://api.tukui.org/v1/addon/elvui");
 
                 var elvuiVersion = JsonSerializer.Deserialize<TukuiVersion>(content);
-                if (elvuiVersion?.version == null)
+                if (elvuiVersion?.Version == null)
                 {
                     Console.WriteLine("Cant resolve remote version");
                     return;
                 }
 
-                if (Utils.CheckVersions(elvuiVersion?.version))
+                if (Utils.CheckVersions(elvuiVersion?.Version))
                 {
-                    Console.WriteLine($"Already updated to latest version {elvuiVersion?.version}");
+                    Console.WriteLine($"Already updated to latest version {elvuiVersion?.Version}");
                     return;
                 }                
 
-                Console.WriteLine("Ready to update " + elvuiVersion?.version);
-                Console.WriteLine("Download from " + elvuiVersion?.url);
-                Utils.Download(elvuiVersion.url);
+                Console.WriteLine("Ready to update " + elvuiVersion?.Version);
+                Console.WriteLine("Download from " + elvuiVersion?.Url);
+                Utils.Download(elvuiVersion.Url);
                 Console.WriteLine("Extracting");
                 Utils.Extract();                
                 Console.WriteLine("Get WoW location");
