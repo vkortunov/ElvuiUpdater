@@ -1,6 +1,8 @@
 ﻿
 
+using ElvuiUpdater.Domain;
 using ElvuiUpdater.SoftwareUpdate;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace ElvuiUpdater
@@ -9,7 +11,7 @@ namespace ElvuiUpdater
     {
         public static void Main(string[] args)
         {
-            var version = "version-1.1.0";
+            var version = "version-1.2.0";
             try
             {
                 GitSoftwareUpdater swUpdater = new GitSoftwareUpdater(version);
@@ -35,20 +37,24 @@ namespace ElvuiUpdater
         {
             try
             {
-                var content = Utils.GetContent("https://www.tukui.org/welcome.php");
-                var version = Utils.GetRemoteVerion2(content);
+                var content = Utils.GetContent("https://api.tukui.org/v1/addon/elvui");
 
-                if (Utils.CheckVersions(version))
+                var elvuiVersion = JsonSerializer.Deserialize<TukuiVersion>(content);
+                if (elvuiVersion?.version == null)
                 {
-                    Console.WriteLine($"Already updated to latest version {version}");
+                    Console.WriteLine("Cant resolve remote version");
                     return;
                 }
 
-                var link = Utils.GetDownloadLink(content);
-                Console.WriteLine("Ready to update " + link.Replace("/downloads/", ""));
-                var url = "https://www.tukui.org" + link;
-                Console.WriteLine("Download from " + url);
-                Utils.Download(url);
+                if (Utils.CheckVersions(elvuiVersion?.version))
+                {
+                    Console.WriteLine($"Already updated to latest version {elvuiVersion?.version}");
+                    return;
+                }                
+
+                Console.WriteLine("Ready to update " + elvuiVersion?.version);
+                Console.WriteLine("Download from " + elvuiVersion?.url);
+                Utils.Download(elvuiVersion.url);
                 Console.WriteLine("Extracting");
                 Utils.Extract();                
                 Console.WriteLine("Get WoW location");
