@@ -25,5 +25,4 @@ namespace ElvuiUpdater.Domain
         public string screenshot_url { get; set; }
         public List<string> directories { get; set; }
     }
-
 }

@@ -43,8 +43,4 @@ namespace ElvuiUpdater.SoftwareUpdate
         [JsonPropertyName("browser_download_url")]
         public string BrowserDownloadUrl { get; set; }
     }
-
-
-
-
 }

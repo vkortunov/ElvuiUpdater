@@ -58,8 +58,4 @@ namespace ElvuiUpdater.SoftwareUpdate
         [JsonPropertyName("site_admin")]
         public bool? SiteAdmin { get; set; }
     }
-
-
-
-
 }

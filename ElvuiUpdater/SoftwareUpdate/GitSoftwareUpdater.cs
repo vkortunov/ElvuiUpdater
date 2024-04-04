@@ -24,6 +24,7 @@ namespace ElvuiUpdater.SoftwareUpdate
             var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             return content;
         }
+
         private void Download(string link, string file)
         {
 
@@ -37,12 +38,14 @@ namespace ElvuiUpdater.SoftwareUpdate
             while (!completeDownload) { Thread.Sleep(1000); }
             completeDownload = false;
         }
+
         void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             if (progressIndicator == null)
                 progressIndicator = new ProgressIndicator(e.TotalBytesToReceive);
             progressIndicator.SetProgress(e.BytesReceived);
         }
+
         void client_DownloadFileCompleted(object? sender, AsyncCompletedEventArgs e)
         {
             Console.WriteLine("Completed");
@@ -54,6 +57,7 @@ namespace ElvuiUpdater.SoftwareUpdate
         ProgressIndicator? progressIndicator;
         private Release? lastVersion;
         readonly string extractPath = "tmp";
+        
         public GitSoftwareUpdater(string currentVersion)
         {
             Clean();
@@ -66,13 +70,13 @@ namespace ElvuiUpdater.SoftwareUpdate
 
             lastVersion = releases?.Where(v => v.Draft == false && v.Prerelease == false && Version.Parse(v.Name) > curVersion)?.MaxBy(v => Version.Parse(v.Name));
         }
+        
         public bool HasUpdate => lastVersion != null && lastVersion.Assets.Count > 0;
 
         public Release? GetLastRelease()
         {
             return lastVersion;
         }
-
 
         private void CloseApp(string ArrayProcessName)
         {
@@ -125,6 +129,7 @@ namespace ElvuiUpdater.SoftwareUpdate
             process.Start();
 
         }
+
         public void DoUpdate()
         {
             if (lastVersion != null && lastVersion.Assets.Count > 0)

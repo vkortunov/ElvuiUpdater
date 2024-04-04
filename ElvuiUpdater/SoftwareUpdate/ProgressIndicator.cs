@@ -67,10 +67,7 @@ namespace ElvuiUpdater.SoftwareUpdate
                 Console.WriteLine($"[{prog}]");
                 if (progress != progressLength)
                     Console.SetCursorPosition(0, Console.CursorTop - 1);
-
-
             }
         }
-
     }
 }
