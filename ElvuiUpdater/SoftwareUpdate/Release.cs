@@ -58,8 +58,4 @@ namespace ElvuiUpdater.SoftwareUpdate
         [JsonPropertyName("body")]
         public string Body { get; set; }
     }
-
-
-
-
 }

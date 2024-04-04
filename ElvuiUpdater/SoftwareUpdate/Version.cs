@@ -19,10 +19,12 @@ namespace ElvuiUpdater.SoftwareUpdate
         public string BuildRow { get; set; }
         public string Row { get; set; }
         public int Priority { get; set; } = 0;
+
         public override string ToString()
         {
             return $"{Major}.{Minor}.{Patch}.{Build} (row:{MajorRow}.{MinorRow}.{PatchRow}.{BuildRow}) - priority {Priority}";
         }
+
         public override bool Equals(object obj)
         {
             if (obj == null) return false;
@@ -56,10 +58,12 @@ namespace ElvuiUpdater.SoftwareUpdate
             if (b.Major == a.Major && b.Minor == a.Minor && b.Patch == a.Patch && b.Build > a.Build) return true;
             return false;
         }
+
         public static bool operator <=(Version a, Version b)
         {
             return a < b || a.Equals(b);
         }
+
         public static bool operator ==(Version a, Version b)
         {
             return a.Equals(b);

@@ -57,5 +57,4 @@ namespace ElvuiUpdater.Domain
         [JsonPropertyName("directories")]
         public List<string> Directories { get; set; }
     }
-
 }

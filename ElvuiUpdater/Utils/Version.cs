@@ -30,6 +30,7 @@ namespace ElvuiUpdater
             return GetVerions(wowPath + addons);
 
         }
+
         public static string GetDownloadedVersion()
         {
             string extractPath = @".\extract";
@@ -41,11 +42,12 @@ namespace ElvuiUpdater
         {
             var versFile = @"\ElvUI\ElvUI_Mainline.toc";
             var text = File.ReadAllText(path + versFile);
-            var template = @"Version: (?<verion>.+)\n?";
+            var template = @"Version: (?<verion>.+)\r?\n?";
 
             var regex = new Regex(template, RegexOptions.IgnoreCase);
             var match = regex.Match(text);
             var version = match.Groups["verion"]?.Value;
+            version = version?.Trim('v', '\n', '\r');
             return version;
         }
     }
