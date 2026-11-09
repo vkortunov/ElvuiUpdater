@@ -11,7 +11,7 @@ namespace ElvuiUpdater
     {
         public static void Main(string[] args)
         {
-            var version = "version-1.4.1";
+            var version = "version-1.4.2";
             try
             {
                 GitSoftwareUpdater swUpdater = new GitSoftwareUpdater(version);
