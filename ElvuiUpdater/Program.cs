@@ -11,7 +11,7 @@ namespace ElvuiUpdater
     {
         public static void Main(string[] args)
         {
-            var version = "version-1.4.2";
+            var version = "version-1.5.0";
             try
             {
                 GitSoftwareUpdater swUpdater = new GitSoftwareUpdater(version);
@@ -58,10 +58,25 @@ namespace ElvuiUpdater
                 Console.WriteLine("Extracting");
                 Utils.Extract();                
                 Console.WriteLine("Get WoW location");
-                var wowPath = Utils.GetWowLocation();
-                Console.WriteLine(wowPath);
-                Utils.Backup(wowPath);
-                Utils.Update(wowPath);
+                
+                var wowPaths = Utils.GetElvUIInstalledLocations();
+                if(wowPaths != null && wowPaths.Count() > 0)
+                {
+                    foreach(var wowPath in wowPaths)
+                    {
+                        Console.WriteLine(wowPath);
+                        Utils.Backup(wowPath);
+                        Utils.Update(wowPath);
+                    }
+                }
+                else
+                {
+                    var wowPath = Utils.GetWowLocation();
+                    Console.WriteLine(wowPath);
+                    Utils.Backup(wowPath);
+                    Utils.Update(wowPath);
+                }
+
                 Console.WriteLine("Updated successfully");
             }
             catch (Exception ex)

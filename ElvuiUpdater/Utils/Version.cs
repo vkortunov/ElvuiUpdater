@@ -11,7 +11,7 @@ namespace ElvuiUpdater
     {
         public static bool CheckVersions()
         {
-            var currentVerison = GetCurrentVersion();
+            var currentVerison = GetMinCurrentVersion();
             var newVerison = GetDownloadedVersion();
             return currentVerison == newVerison;
         }
@@ -19,7 +19,7 @@ namespace ElvuiUpdater
         public static bool CheckVersions(string? remoteVersion)
         {
             if (remoteVersion == null) return false;
-            var currentVerison = GetCurrentVersion();            
+            var currentVerison = GetMinCurrentVersion();            
             return currentVerison == remoteVersion;
         }
 
@@ -28,7 +28,19 @@ namespace ElvuiUpdater
             var wowPath = GetWowLocation();
             var addons = @"\Interface\AddOns";
             return GetVerions(wowPath + addons);
+        }
 
+        public static string GetMinCurrentVersion()
+        {
+            var wowPaths = GetElvUIInstalledLocations();
+            var addons = @"\Interface\AddOns";
+            var versions = new List<string>();
+            foreach (var wowPath in wowPaths)
+            {
+                versions.Add(GetVerions(wowPath + addons));
+            }
+            var minversion = versions.Min();
+            return minversion;            
         }
 
         public static string GetDownloadedVersion()

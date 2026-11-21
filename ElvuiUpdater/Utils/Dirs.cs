@@ -1,14 +1,28 @@
 ﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ElvuiUpdater
 {
     public partial class Utils
     {
+        public static IEnumerable<string> GetElvUIInstalledLocations()
+        {
+
+            var gamesPaths = new List<string>() { "_retail_", "_forever_", "_classic_" };
+
+            var key = @"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Blizzard Entertainment\World of Warcraft";
+            var installPath = Registry.GetValue(key, "InstallPath", null) as string;
+            if (string.IsNullOrEmpty(installPath)) 
+                return Enumerable.Empty<string>();
+            var dirs = Directory.GetDirectories(installPath + "..\\");
+            if(dirs.Length > 0)
+            {
+                var games = gamesPaths.SelectMany(g => dirs.Where(d => d.EndsWith("\\" + g)));
+                games = games.Where(d => Directory.Exists(d + @"\Interface\AddOns\ElvUI"));
+                return games;
+            }
+
+            return dirs;
+        }
         public static string GetWowLocation()
         {
             var key = @"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Blizzard Entertainment\World of Warcraft";
