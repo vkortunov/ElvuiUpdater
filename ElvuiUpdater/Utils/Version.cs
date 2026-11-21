@@ -40,7 +40,7 @@ namespace ElvuiUpdater
 
         public static string GetVerions(string path)
         {
-            var versFile = @"\ElvUI\ElvUI_Mainline.toc";
+            var versFile = File.Exists(path + @"\ElvUI\ElvUI.toc") ? @"\ElvUI\ElvUI.toc" : @"\ElvUI\ElvUI_Mainline.toc";
             var text = File.ReadAllText(path + versFile);
             var template = @"Version: (?<verion>.+)\r?\n?";
 

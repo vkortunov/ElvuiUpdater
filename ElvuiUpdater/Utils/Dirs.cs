@@ -13,7 +13,7 @@ namespace ElvuiUpdater
         {
             var key = @"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Blizzard Entertainment\World of Warcraft";
             var installPath = (string)Registry.GetValue(key, "InstallPath", null);
-            return installPath;
+            return installPath + "..\\_retail_\\";
         }
 
         public static void Backup(string path)
